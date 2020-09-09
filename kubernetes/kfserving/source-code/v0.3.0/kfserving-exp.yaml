@@ -1,0 +1,58 @@
+explainer:
+  description: Explainer defines the model explanation service spec,
+    explainer service calls to predictor or transformer if it is specified.
+  properties:
+    alibi:
+      description: Spec for alibi explainer
+      properties:
+        config:
+          description: Inline custom parameter settings for explainer
+          type: object
+        resources:
+          description: Defaults to requests and limits of 1CPU, 2Gb
+            MEM.
+          type: object
+        runtimeVersion:
+          description: Defaults to latest Alibi Version
+          type: string
+        storageUri:
+          description: The location of a trained explanation model
+          type: string
+        type:
+          description: The type of Alibi explainer
+          type: string
+      required:
+      - type
+      type: object
+    custom:
+      description: Spec for a custom explainer
+      properties:
+        container:
+          type: object
+      required:
+      - container
+      type: object
+    logger:
+      description: Activate request/response logging
+      properties:
+        mode:
+          description: What payloads to log
+          type: string
+        url:
+          description: URL to send request logging CloudEvents
+          type: string
+      type: object
+    maxReplicas:
+      description: This is the up bound for autoscaler to scale to
+      format: int64
+      type: integer
+    minReplicas:
+      description: Minimum number of replicas, pods won't scale down
+        to 0 in case of no traffic
+      format: int64
+      type: integer
+    serviceAccountName:
+      description: ServiceAccountName is the name of the ServiceAccount
+        to use to run the service
+      type: string
+  type: object
